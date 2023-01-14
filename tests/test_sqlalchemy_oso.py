@@ -98,8 +98,12 @@ def test_that_user_1_can_see_only_observations_in_station_1(authorized_session):
     assert len(observations) == 2
     for observation in observations:
         assert "station 1" in  observation.comments
-    
 
+@pytest.mark.parametrize("authorized_session", [("read", "1")],indirect=True)  
+def test_that_user_1_cannot_read_observations_from_station_2(authorized_session):
+    observations = authorized_session.query(Observations).filter(Observations.station == "2").all()
+    assert len(observations) == 0
+    
 @pytest.mark.parametrize("authorized_session", [("read", "2")], indirect=True)
 def test_that_user_2_can_see_observations_in_station_1_and_station_2(authorized_session):
     observations = authorized_session.query(Observations).all()
