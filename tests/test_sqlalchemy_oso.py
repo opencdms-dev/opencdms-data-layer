@@ -5,7 +5,6 @@ from sqlalchemy.sql import text as sa_text
 from sqlalchemy.orm import sessionmaker, close_all_sessions
 from data_model import Base, Observations, Users, Stations
 from oso import Oso
-import os
 from sqlalchemy_oso import authorized_sessionmaker, register_models
 
 UID = os.environ["POSTGRES_USER"]
@@ -42,14 +41,7 @@ def authorized_session(request):
 
 
 def setup_module(module):
-    # Postgresql does not automatically reset ID if a table is truncated like mysql does
-    # close_all_sessions()
-    with db_engine.connect() as connection:
-        with connection.begin():
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE cdm.{Stations.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE cdm.{Observations.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE cdm.{Users.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
-
+    # Create tables
     Base.metadata.bind = db_engine
 
     schemas = {v.schema for k, v in Base.metadata.tables.items()}
