@@ -129,8 +129,10 @@ Sqlachemy-oso requires you pass the authenticated user to the session as such:
 # Define a custom user authentication that would retrieve the current user
 
 # The current user id
-
 user_id = "1"
+
+# Action to be performed by user
+action = "read"
 
 def get_authenticated_user(user_id: str):
     """ Uses the standard session to retrieve user info """ 
