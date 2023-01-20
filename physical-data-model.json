@@ -1,0 +1,122 @@
+{
+  "schemas": [
+    {
+      "name": "cdm",
+      "tables": [
+        {
+          "name": "observation_type", "type": "reference-data", "comment": "", "columns": [
+            {"name": "id",          "kind": "Integer", "primary_key": true,  "foreign_key": false, "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "name",        "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Short name for observation type", "nullable": false, "unique":  false, "default": false},
+            {"name": "description", "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Description of observation type", "nullable": false, "unique":  false, "default": false},
+            {"name": "link",        "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Link to definition of observation type", "nullable": true, "unique":  false, "default": false}
+          ]
+        },
+        {
+          "name": "feature_type", "type": "reference-data", "comment": "", "columns": [
+            {"name": "id",          "kind": "Integer", "primary_key": true,  "foreign_key": false, "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "name",        "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Short name for feature type", "nullable": false, "unique":  false, "default": false},
+            {"name": "description", "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Description of feature type", "nullable": false, "unique":  false, "default": false},
+            {"name": "link",        "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Link to definition of feature type", "nullable": true, "unique":  false, "default": false}
+          ]
+        },
+        {
+          "name": "observed_property", "type": "reference-data", "comment": "", "columns": [
+            {"name": "id",            "kind": "Integer", "primary_key": true,  "foreign_key": false, "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "short_name",    "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Short name representation of observed property, e.g. 'at'", "nullable": false, "unique":  true, "default": false},
+            {"name": "standard_name", "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "CF standard name (if applicable), e.g. 'air_temperature'", "nullable": true, "unique":  false, "default": false},
+            {"name": "units",         "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Canonical units, e.g. 'Kelvin'", "nullable": false, "unique":  false, "default": false},
+            {"name": "description",   "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Description of observed property", "nullable": false, "unique":  false, "default": false},
+            {"name": "link",          "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Link to definition / source of observed property", "nullable": true, "unique":  false, "default": false}
+          ]
+        },
+        {
+          "name": "observing_procedure", "type": "reference-data", "comment": "", "columns": [
+            {"name": "id",          "kind": "Integer", "primary_key": true,  "foreign_key": false, "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "name",        "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Name of observing procedure", "nullable": false, "unique":  true, "default": false},
+            {"name": "description", "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Description of observing procedure", "nullable": false, "unique":  false, "default": false},
+            {"name": "link",        "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Link to further information", "nullable": true, "unique":  false, "default": false}
+          ]
+        },
+        {
+          "name": "record_status", "type": "reference-data", "comment": "", "columns": [
+            {"name": "id",          "kind": "Integer", "primary_key": true,  "foreign_key": false, "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "name",        "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Short name for status", "nullable": false, "unique":  true, "default": false},
+            {"name": "description", "kind": "String",  "primary_key": false, "foreign_key": false, "comment": "Description of the status", "nullable": false, "unique":  false, "default": false}
+          ]
+        },
+        {
+          "name": "stations", "type": "data", "comment": "", "columns": [
+            {"name": "id",                       "kind": "String",    "primary_key": true,  "foreign_key": false, "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "name",                     "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "Preferred name of station", "nullable": false, "unique":  true, "default": false},
+            {"name": "description",              "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "Station description", "nullable": true, "unique":  false, "default": false},
+            {"name": "link",                     "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "URI to station, e.g. to OSCAR/Surface", "nullable": true, "unique":  false, "default": false},
+            {"name": "location",                 "kind": "Geography", "primary_key": false, "foreign_key": false, "comment": "Location of station", "nullable": true, "unique":  false, "default": false},
+            {"name": "elevation",                "kind": "Numeric",   "primary_key": false, "foreign_key": false, "comment": "Elevation of station above mean sea level", "nullable": true, "unique":  false, "default": false},
+            {"name": "wigos_station_identifier", "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "WIGOS station identifier", "nullable": true, "unique":  false, "default": false},
+            {"name": "facility_type",            "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "Type of observing facility, fixed land, mobile sea, etc", "nullable": true, "unique":  false, "default": false},
+            {"name": "date_established",         "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "Date station was first established", "nullable": true, "unique":  false, "default": false},
+            {"name": "wmo_region",               "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "WMO region in which the station is located", "nullable": true, "unique":  false, "default": false},
+            {"name": "territory",                "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "Territory the station is located in", "nullable": true, "unique":  false, "default": false},
+            {"name": "valid_from",               "kind": "DateTime",  "primary_key": false, "foreign_key": false, "comment": "Date from which the details for this record are valid", "nullable": true, "unique":  false, "default": false},
+            {"name": "valid_to",                 "kind": "DateTime",  "primary_key": false, "foreign_key": false, "comment": "Date after which the details for this record are no longer valid", "nullable": true, "unique":  false, "default": false},
+            {"name": "version",                  "kind": "Integer",   "primary_key": false, "foreign_key": false, "comment": "Version number of this record", "nullable": false, "unique":  false, "default": 1},
+            {"name": "change_date",              "kind": "DateTime",  "primary_key": false, "foreign_key": false, "comment": "Date this record was changed", "nullable": false, "unique":  false, "default": false},
+            {"name": "status",                   "kind": "Integer",   "primary_key": false, "foreign_key": "cdm.record_status.id", "comment": "Whether this is the latest version or an archived version of the record", "nullable": false, "unique":  false, "default": 1},
+            {"name": "comments",                 "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "Free text comments on this record, for example description of changes made etc", "nullable": false, "unique":  false, "default": false}
+        ]
+        },
+        {
+          "name": "sensors", "type": "data", "comment": "", "columns": [
+            {"name": "id",          "kind": "String", "primary_key": true,  "foreign_key": false, "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "name",        "kind": "String", "primary_key": false, "foreign_key": false, "comment": "Name of sensor", "nullable": false, "unique":  true, "default": false},
+            {"name": "description", "kind": "String", "primary_key": false, "foreign_key": false, "comment": "Description of sensor", "nullable": false, "unique":  false, "default": false},
+            {"name": "link",        "kind": "String", "primary_key": false, "foreign_key": false, "comment": "Link to further information", "nullable": true, "unique":  false, "default": false}
+          ]
+        },
+        {
+          "name": "observations", "type": "data", "comment": "", "columns": [
+            {"name": "id",                  "kind": "String",    "primary_key": true,  "foreign_key": false, "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "location",            "kind": "Geography", "primary_key": false, "foreign_key": false, "comment": "location of observation", "nullable": false, "unique":  false, "default": false},
+            {"name": "observation_type",    "kind": "Integer",   "primary_key": false, "foreign_key": "cdm.observation_type.id", "comment": "Type of observation", "nullable": true, "unique":  false, "default": false},
+            {"name": "phenomenon_start",    "kind": "DateTime",  "primary_key": false, "foreign_key": false, "comment": "Start time of the phenomenon being observed or observing period, if missing assumed instantaneous with time given by phenomenon_end", "nullable": true, "unique":  false, "default": false},
+            {"name": "phenomenon_end",      "kind": "DateTime",  "primary_key": false, "foreign_key": false, "comment": "End time of the phenomenon being observed or observing period", "nullable": false, "unique":  false, "default": false},
+            {"name": "result_value",        "kind": "Numeric",   "primary_key": false, "foreign_key": false, "comment": "The value of the result in numeric representation", "nullable": false, "unique":  false, "default": false},
+            {"name": "result_uom",          "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "Units used to represent the value being observed", "nullable": true, "unique":  false, "default": false},
+            {"name": "result_description",  "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "String representation of the result if applicable", "nullable": true, "unique":  false, "default": false},
+            {"name": "result_quality",      "kind": "JSONB",     "primary_key": false, "foreign_key": false, "comment": "JSON representation of the result quality, key / value pairs", "nullable": true, "unique":  false, "default": false},
+            {"name": "result_time",         "kind": "DateTime",  "primary_key": false, "foreign_key": false, "comment": "Time that the result became available", "nullable": true, "unique":  false, "default": false},
+            {"name": "valid_from",          "kind": "DateTime",  "primary_key": false, "foreign_key": false, "comment": "Time that the result starts to be valid", "nullable": true, "unique":  false, "default": false},
+            {"name": "valid_to",            "kind": "DateTime",  "primary_key": false, "foreign_key": false, "comment": "Time after which the result is no longer valid", "nullable": true, "unique":  false, "default": false},
+            {"name": "station",             "kind": "String",    "primary_key": false, "foreign_key": "cdm.stations.id", "comment": "Station associated with making the observation, equivalent to OGC OMS 'host'", "nullable": true, "unique":  false, "default": false},
+            {"name": "sensor",              "kind": "String",    "primary_key": false, "foreign_key": "cdm.sensors.id", "comment": "Sensor associated with making the observation, equivalent to OGC OMS 'observer'", "nullable": true, "unique":  false, "default": false},
+            {"name": "observed_property",   "kind": "Integer",   "primary_key": false, "foreign_key": "cdm.observed_property.id", "comment": "The phenomenon, or thing, being observed", "nullable": false, "unique":  false, "default": false},
+            {"name": "observing_procedure", "kind": "Integer",   "primary_key": false, "foreign_key": "cdm.observing_procedure.id", "comment": "Procedure used to make the observation", "nullable": true, "unique":  false, "default": false},
+            {"name": "report_id",           "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "Parent report ID, used to link coincident observations together", "nullable": true, "unique":  false, "default": false},
+            {"name": "collection",          "kind": "String",    "primary_key": false, "foreign_key": "cdm.collections.id", "comment": "Primary collection or dataset that this observation belongs to", "nullable": true, "unique":  false, "default": false},
+            {"name": "parameter",           "kind": "JSONB",     "primary_key": false, "foreign_key": false, "comment": "List of key/ value pairs in JSONB", "nullable": true, "unique":  false, "default": false},
+            {"name": "feature_of_interest", "kind": "String",    "primary_key": false, "foreign_key": "cdm.features.id", "comment": "Feature that this observation is associated with", "nullable": true, "unique":  false, "default": false},
+            {"name": "version",             "kind": "Integer",   "primary_key": false, "foreign_key": false, "comment": "Version number of this record", "nullable": false, "unique":  false, "default": 1},
+            {"name": "change_date",         "kind": "DateTime",  "primary_key": false, "foreign_key": false, "comment": "Date this record was changed", "nullable": false, "unique":  false, "default": false},
+            {"name": "status",              "kind": "Integer",   "primary_key": false, "foreign_key": "cdm.record_status.id", "comment": "Whether this is the latest version or an archived version of the record", "nullable": false, "unique":  false, "default": 1},
+            {"name": "comments",            "kind": "String",    "primary_key": false, "foreign_key": false, "comment": "Free text comments on this record, for example description of changes made etc", "nullable": false, "unique":  false, "default": false}
+          ]
+        },
+        {
+          "name": "collections", "type": "data", "comment": "", "columns": [
+            {"name": "id",   "kind": "String", "primary_key": true,  "foreign_key": false, "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "name", "kind": "String", "primary_key": false, "foreign_key": false, "comment": "Name of collection", "nullable": false, "unique":  true, "default": false},
+            {"name": "link", "kind": "String", "primary_key": false, "foreign_key": false, "comment": "Link to further information on collection", "nullable": true, "unique":  false, "default": false}
+          ]
+        },
+        {
+          "name": "features", "type": "data", "comment": "table to contain definition of different geographic features", "columns": [
+            {"name": "id",       "kind": "String",    "primary_key": true,  "foreign_key": false,  "comment": "ID / primary key", "nullable": false, "unique":  true, "default": false},
+            {"name": "type",     "kind": "Integer",   "primary_key": false, "foreign_key": "cdm.feature_type.id",  "comment": "enumerated feature type", "nullable": false, "unique":  true, "default": false},
+            {"name": "geometry", "kind": "Geography", "primary_key": false, "foreign_key": false,  "comment": "", "nullable": false, "unique":  true, "default": false},
+            {"name": "parent",   "kind": "String",    "primary_key": false, "foreign_key": "cdm.features.id",  "comment": "Parent feature for this feature if nested", "nullable": true, "unique":  true, "default": false}
+          ]
+        }
+      ]
+    }
+  ]
+}
