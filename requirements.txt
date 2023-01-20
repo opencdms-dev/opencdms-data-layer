@@ -1,0 +1,4 @@
+sqlalchemy
+SQLAlchemy-Utils
+geoalchemy2
+psycopg2
