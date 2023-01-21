@@ -1,14 +1,3 @@
-allow(actor, action, resource) if
-  has_permission(actor, action, resource);
-
-# Users can see each other.
-has_permission(_: Users, "read", _: Users);
-
-# A User can read their own profile.
-has_permission(_: Users{id: id}, "read_profile", _:Users{id: id});
-
-# Any logged-in user can create a new org.
-has_permission(_: Users, "create", _: Stations);
 
 actor Users {}
 
