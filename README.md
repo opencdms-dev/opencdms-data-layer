@@ -12,29 +12,25 @@
 
 [ERD Diagram](assets/opencdms_erd.png "ERD diagram")
 
-## RBAC using Sqlachemy-oso
+## Problem Statement
 
-Sqlachemy-oso library provides a RBAC on Sqlachemy models. 
-Using Sqlachemy-oso's authorized_sesssion object, we can limit database records that a user can access without explicitly applying filters or "WHERE" clauses.
+Enforcing a RBAC system and multi-tenancy on database is a herculian task. Here we have
+similar problem controlling who has access to Opencdms models. In this project, we used Sqlalchemy-oso to enforce RBAC system on opencdms database.
 
-Sqlalchemy-oso, internally, applies filters on the models using the policies specified in the polar file.
+In this database, We have observations table which collects observations from different Stations.
+In these stations, we have users who run the daily activities of the station. Members in one station, have no relationship with members in another station. And staff members in a station, have 
+defined activities which they can perform.
 
-To use sqlalchemy-oso, 
+In Station we have four roles that a user can have namely:
+1. rainfall  can "read_observation" in a station.
+2. operator can  "list_observation" in station and inherits rainfall permissions.
+3. metadata can "create_observation" in a station and inherits operator permissions.
+4. admin  inherits metadata permissions.
 
-1. Determine the table or models you want to apply RBAC on. In our case, we want to limit access to Observations table to only users who have relationship to the station from where the Observations were made.
+The admin can perform any activity that other members can perform but cannot do same in other station.
 
-2. Define the polar policy file
+The activities permissions above is not resource specific, notice there is no delete_permissions and update_permissions. Hence we need a means to enforce authorization on the resource level.
 
-```
-policy.polar
 
-allow(user: Users, "read", observation: Observations) if
-    observation.station in user.station_ids;
 
-allow(user: Users, "write", observation: Observations) if
-    observation.station in user.station_ids;
-
-```
-
-In the above policy definition we are allowing read and write permissions on observations table to users who have a relationship with the source station.
 
