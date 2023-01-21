@@ -151,15 +151,7 @@ class Users(Base):
     username = Column(String, comment="User name")
 
 
-# StationsRoleMixin = resource_role_class(
-#     declarative_base=Base,
-#     user_model=Users,
-#     resource_model=Stations,
-#     role_choices=["ADMIN", "METADATA", "OPERATOR", "RAINFALL"],
-# )
 
-# class StationsRole(Base, StationsRoleMixin):
-#    pass
 
 class StationsRole(Base):
     __tablename__ = "station_roles"
@@ -170,14 +162,3 @@ class StationsRole(Base):
     station_id = Column(String, ForeignKey("cdm.stations.id"), nullable=False)
     user = relationship("Users", backref=backref("station_roles", lazy=False), lazy=False)
     station = relationship("Stations", backref=backref("roles", lazy=False), lazy=False)
-
-# class ObservationsRole(Base):
-#     __tablename__ = "observation_roles"
-#     __table_args__ = {'schema': 'cdm'}
-#     name = Column(String, index=True)
-#     id = Column(Integer, primary_key=True, autoincrement=True)
-#     user_id = Column(String, ForeignKey("cdm.users.id"), nullable=False)
-#     observation_id = Column(String, ForeignKey("cdm.observations.id"), nullable=False)
-#     user = relationship("Users", backref=backref("observation_roles", lazy=False), lazy=False)
-#     observation = relationship("Observations", backref=backref("roles", lazy=False), lazy=False)
-    
