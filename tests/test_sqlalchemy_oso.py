@@ -72,21 +72,21 @@ def setup_module(module):
     session = Session()
 
     
-    london = Stations(id=STATION["london"],name="London Station")
+    london_station = Stations(id=STATION["london"],name="London Station")
     # "admin", "metadata", "operator", "rainfall"
     london_admin_staff = Users(id=LONDON_STAFF["admin"],username="John Doe")
     london_metadata_staff = Users(id=LONDON_STAFF["metadata"], username="Mike Metadata")
     london_operator_staff = Users(id=LONDON_STAFF["operator"], username="Dan Operator")
     london_rainfall_staff = Users(id=LONDON_STAFF["rainfall"], username="Dave Rainfall")
-    session.add_all([london, london_admin_staff, london_metadata_staff, london_operator_staff, london_rainfall_staff])
+    session.add_all([london_station, london_admin_staff, london_metadata_staff, london_operator_staff, london_rainfall_staff])
 
-    nigeria = Stations(id=STATION["nigeria"], name="Nigerian Station")
+    nigeria_station = Stations(id=STATION["nigeria"], name="Nigerian Station")
     nigeria_admin_staff = Users(id=NIGERIA_STAFF["admin"], username="Emeka Adeola")
     nigeria_metadata_staff = Users(id=NIGERIA_STAFF["metadata"], username="Hassan Metadata")
     nigeria_operator_staff = Users(id=NIGERIA_STAFF["operator"], username="Edidong Operator")
     nigeria_rainfall_staff = Users(id=NIGERIA_STAFF["rainfall"], username="Ukamaka Rainfall")
 
-    session.add_all([nigeria, nigeria_admin_staff, nigeria_metadata_staff, nigeria_operator_staff, nigeria_rainfall_staff])
+    session.add_all([nigeria_station, nigeria_admin_staff, nigeria_metadata_staff, nigeria_operator_staff, nigeria_rainfall_staff])
 
     #  Assigns a given station role to a user
     def station_role(user: Users,station: Stations,role: str):
@@ -94,25 +94,25 @@ def setup_module(module):
         session.add(station_role)
     
     # We do the actually role assignment
-    station_role(london_admin_staff,london,"admin")
-    station_role(london_operator_staff,london,"operator")
-    station_role(london_metadata_staff,london,"metadata")
-    station_role(london_rainfall_staff,london,"rainfall")
+    station_role(london_admin_staff,london_station,"admin")
+    station_role(london_operator_staff,london_station,"operator")
+    station_role(london_metadata_staff,london_station,"metadata")
+    station_role(london_rainfall_staff,london_station,"rainfall")
 
-    station_role(nigeria_admin_staff,nigeria,"admin")
-    station_role(nigeria_operator_staff,nigeria,"operator")
-    station_role(nigeria_metadata_staff,nigeria,"metadata")
-    station_role(nigeria_rainfall_staff,nigeria,"rainfall")
+    station_role(nigeria_admin_staff,nigeria_station,"admin")
+    station_role(nigeria_operator_staff,nigeria_station,"operator")
+    station_role(nigeria_metadata_staff,nigeria_station,"metadata")
+    station_role(nigeria_rainfall_staff,nigeria_station,"rainfall")
 
     session.commit()
     session.flush()
 
     #  Create Observations from stations
-    london_obs1 = Observations(id="1",comments="First observation from London", station=london.id)
-    london_obs2 = Observations(id="2",comments="Second observation from London", station=london.id)
+    london_obs1 = Observations(id="1",comments="First observation from London", station=london_station.id)
+    london_obs2 = Observations(id="2",comments="Second observation from London", station=london_station.id)
 
-    nigeria_obs1 = Observations(id="3",comments="First observation from Nigeria", station=nigeria.id)
-    nigeria_obs2 = Observations(id="4",comments="Second observation from Nigeria", station=nigeria.id)
+    nigeria_obs1 = Observations(id="3",comments="First observation from Nigeria", station=nigeria_station.id)
+    nigeria_obs2 = Observations(id="4",comments="Second observation from Nigeria", station=nigeria_station.id)
 
     session.add_all([london_obs1, london_obs2, nigeria_obs1, nigeria_obs2])
     session.commit()
