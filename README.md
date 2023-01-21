@@ -5,7 +5,7 @@
 
 1. Run `docker-compose up -d`.
 2. `docker-compose run db-builder`
-3. `python build_db.py`
+3. `pytest`
 
 
 # ERD Diagram
@@ -136,7 +136,7 @@ def list_observation(user: Users, station_id: str, session: Session):
     oso.authorize(user, "list_observation", station)
     observations = session.query(Observations).filter(Observations.station == station_id).all()
     return observations
-    
+
 def create_observation(user: Users, station_id: str, session: Session):
     station = session.query(Stations).filter(Stations.id == station_id).one_or_none()
     oso.authorize(user, "create_observation", station)
@@ -154,4 +154,23 @@ def delete_observation(user, station_id: str, observation_id: str, session: Sess
         session.commit()
     return True
 ```
+
+In the above snippet, we demonstrate how used oso to authorize user's action on the controller level.
+Users who do not have the required permissions get a NotFoundError or AuthorizationError. For example:
+
+```
+@pytest.mark.parametrize("authorized_user", [(LONDON_STAFF["admin"],)],indirect=True)
+def test_admin_can_delete_observation_in_own_station(authorized_user, db_session):
+    res = delete_observation(authorized_user,STATION["london"],TEST_LONDON_OBSERVATION_ID, db_session)
+    assert res is True
+    
+@pytest.mark.parametrize("authorized_user", [(LONDON_STAFF["admin"],)],indirect=True)
+def test_admin_cannot_delete_observation_in_another_station(authorized_user, db_session):
+    with pytest.raises(exceptions.AuthorizationError):
+        delete_observation(authorized_user,STATION["london"], TEST_NIGERIA_OBSERVATION_ID, db_session)
+
+
+```
+
+In the test cases above, we could see that an admin user from a station in London can delete observations in London but cannot delete observations from a station in Nigeria.
 
