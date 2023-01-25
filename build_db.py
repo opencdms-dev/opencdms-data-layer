@@ -22,3 +22,4 @@ for _schema in schemas:
         engine.execute(schema.CreateSchema(_schema))
 
 Base.metadata.create_all(engine)
+

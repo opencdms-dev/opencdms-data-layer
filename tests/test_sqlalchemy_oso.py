@@ -125,9 +125,7 @@ def teardown_module(module):
     close_all_sessions()
     with db_engine.connect() as connection:
         with connection.begin():
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE cdm.{Observations.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE cdm.{Stations.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE cdm.{Users.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
+            Base.metadata.drop_all(db_engine)
     db_engine.dispose()
 
 
