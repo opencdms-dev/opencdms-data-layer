@@ -10,11 +10,12 @@ from sqlalchemy import (
     Integer,
     MetaData,
     Numeric,
-    String
+    String,
+    Table
 )
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import declarative_base
-
+from sqlalchemy.orm import declarative_base, relationship, backref
+# from sqlalchemy_oso.role import resource_role_class
 Base = declarative_base()
 
 class Observation_type(Base):
@@ -85,6 +86,7 @@ class Stations(Base):
     comments = Column(  String, comment="Free text comments on this record, for example description of changes made etc")
 
 
+
 class Sensors(Base):
     __tablename__ = "sensors"
     __table_args__ = {'schema': 'cdm'}
@@ -122,6 +124,8 @@ class Observations(Base):
     status = Column( ForeignKey("cdm.record_status.id"), comment="Whether this is the latest version or an archived version of the record")
     comments = Column(  String, comment="Free text comments on this record, for example description of changes made etc")
 
+    source_station = relationship("Stations", backref=backref("observation", lazy=False), lazy=False)
+
 
 class Collections(Base):
     __tablename__ = "collections"
@@ -140,4 +144,21 @@ class Features(Base):
     parent = Column( ForeignKey("cdm.features.id"), comment="Parent feature for this feature if nested")
 
 
+class Users(Base):
+    __tablename__ = "users"
+    __table_args__ = {'schema': 'cdm'}
+    id = Column(  String, comment="ID / primary key", primary_key=True)
+    username = Column(String, comment="User name")
 
+
+
+
+class StationsRole(Base):
+    __tablename__ = "station_roles"
+    __table_args__ = {'schema': 'cdm'}
+    name = Column(String, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String, ForeignKey("cdm.users.id"), nullable=False)
+    station_id = Column(String, ForeignKey("cdm.stations.id"), nullable=False)
+    user = relationship("Users", backref=backref("station_roles", lazy=False), lazy=False)
+    station = relationship("Stations", backref=backref("roles", lazy=False), lazy=False)

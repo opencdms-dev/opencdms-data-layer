@@ -8,4 +8,7 @@ COPY requirements.txt /opt/project/requirements.txt
 RUN pip install -r /opt/project/requirements.txt
 
 WORKDIR /opt/project
+
+COPY . .
+
 ENV PYTHONPATH="$PYTHONPATH":/opt/project

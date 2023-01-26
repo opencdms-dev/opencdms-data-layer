@@ -13,7 +13,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - "${PWD}:/opt/project"
+      - "./:/opt/project"
     entrypoint: bash
     environment:
       POSTGRES_PASSWORD: password

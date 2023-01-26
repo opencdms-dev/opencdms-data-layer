@@ -1,4 +1,8 @@
-sqlalchemy
+SQLAlchemy~=1.4.22
 SQLAlchemy-Utils
 geoalchemy2
 psycopg2
+sqlalchemy-oso
+oso
+pytest==6.2.5
+pytest-order==1.0.0
